@@ -8,13 +8,16 @@ double square(double x) {
 
 int main( int argc, const char* argv[] )
 {
-    int L = 50;
+    int L = 100000;
     
     double *r = (double *)malloc(sizeof(double)*L*L);
     double x,y;
     
-    for ( int ix=0 ; ix<L ; ix++ ) {
-        for ( int iy=0 ; iy<L ; iy++ ) {
+    int ix,iy;
+    
+#pragma omp target teams distribute parallel for collapse(2)
+    for ( ix=0 ; ix<L ; ix++ ) {
+        for ( iy=0 ; iy<L ; iy++ ) {
             x = (ix-L/2.)/L;
             y = (iy-L/2.)/L;
             r[ix*L+iy] = 1./(square(x)+square(y)+1.);

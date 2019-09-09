@@ -1,5 +1,12 @@
+# IRIDIS
+# module add intel-compilers/19.0.3
+CC=icc
+OMPFLAGS=-qopenmp -qopenmp-offload=host
+# CC=gcc
+# OMPFLAGS=-fopenmp -foffload="-lm”
+
 default:
-	clang -fopenmp test.c -o test
+	$(CC) $(OMPFLAGS) test.c -o gpu_test
 
 noparallel:
-	clang test.c -o test
+	$(CC) test.c -o serial_test
